@@ -1,57 +1,8 @@
 <script setup lang="ts">
-import { mdiDelete, mdiPlus } from '@quasar/extras/mdi-v7'
-import { useCreator, useDestroyer, useIndexer } from '@vuemodel/core'
-import { useLocalStorage } from '@vueuse/core'
-import { Dialog } from 'quasar'
-import Board from 'src/models/Board'
-import Project from 'src/models/Project'
-import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { mdiBook, mdiDelete, mdiDotsVertical, mdiPlus, mdiDeleteForever, mdiHome, mdiBookPlus } from '@quasar/extras/mdi-v7'
+import { useMainLayout } from './useMainLayout'
 
-const router = useRouter()
-
-const leftDrawerOpen = ref(false)
-
-const boardsIndexer = useIndexer(Board, { immediate: true })
-const boardCreator = useCreator(Board)
-const boardDestroyer = useDestroyer(Board)
-
-function createBoard () {
-  Dialog.create({
-    title: 'Create A Board',
-    cancel: true,
-    prompt: {
-      model: '',
-      filled: true
-    }
-  }).onOk(async (title) => {
-    await boardCreator.create({ title })
-    router.push({ name: 'board', params: { boardId: boardCreator.record.value?.id ?? '' } })
-  })
-}
-
-function createProject () {
-  Dialog.create({
-    title: 'Create A Project',
-    cancel: true,
-    prompt: {
-      model: '',
-      filled: true
-    }
-  }).onOk(async (name) => {
-    await projectCreator.create({ name })
-    projectId.value = projectCreator.record.value?.id ?? ''
-  })
-}
-
-const projectCreator = useCreator(Project)
-const projectsIndexer = useIndexer(Project, { immediate: true })
-
-const projectId = useLocalStorage('projectId', '')
-watch(projectId, async () => {
-  await router.push({ name: 'home' })
-  window.location.reload()
-})
+const mainLayout = useMainLayout()
 </script>
 
 <template>
@@ -62,13 +13,14 @@ watch(projectId, async () => {
     >
       <q-toolbar>
         <q-btn
+          v-if="mainLayout.projectsIndexer.records?.length"
           flat
           dense
           round
           icon="menu"
+          color="primary"
           aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          v-if="projectsIndexer.records.value?.length"
+          @click="mainLayout.leftDrawerOpen = !mainLayout.leftDrawerOpen"
         />
 
         <q-toolbar-title>
@@ -76,10 +28,10 @@ watch(projectId, async () => {
         </q-toolbar-title>
 
         <q-select
-          v-if="projectsIndexer.records.value?.length"
-          v-model="projectId"
+          v-if="mainLayout.projectsIndexer.records?.length"
+          v-model="mainLayout.projectId"
           class="q-mr-sm"
-          :options="projectsIndexer.records.value"
+          :options="mainLayout.projectsIndexer.records"
           option-label="name"
           option-value="id"
           filled
@@ -90,15 +42,52 @@ watch(projectId, async () => {
         />
 
         <q-btn
-          label="Create Project"
+          :icon="mdiDotsVertical"
+          round
+          color="primary"
           flat
-          @click="createProject()"
-        />
+        >
+          <q-menu auto-close>
+            <q-btn
+              flat
+              class="full-width"
+              color="primary"
+              label="Projects"
+              no-caps
+              :icon="mdiBook"
+              align="left"
+              :to="{ name: 'home' }"
+            />
+
+            <q-btn
+              flat
+              class="full-width"
+              label="Create Project"
+              color="primary"
+              no-caps
+              align="left"
+              :icon="mdiBookPlus"
+              @click="mainLayout.createProject()"
+            />
+
+            <q-btn
+              flat
+              class="full-width"
+              color="primary"
+              label="Clear All"
+              no-caps
+              :icon="mdiDeleteForever"
+              align="left"
+              @click="mainLayout.clearDatabase()"
+            />
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-if="mainLayout.projectsIndexer.records?.length"
+      v-model="mainLayout.leftDrawerOpen"
       show-if-above
       bordered
     >
@@ -114,12 +103,12 @@ watch(projectId, async () => {
             flat
             round
             :icon="mdiPlus"
-            @click="createBoard()"
+            @click="mainLayout.createBoard()"
           />
         </q-item-label>
 
         <q-item
-          v-for="board in boardsIndexer.records.value"
+          v-for="board in mainLayout.boardsIndexer.records"
           :key="board.id"
           :to="{ name: 'board', params: { boardId: board.id } }"
         >
@@ -134,7 +123,7 @@ watch(projectId, async () => {
               flat
               color="blue-grey-3"
               :icon="mdiDelete"
-              @click.stop="boardDestroyer.destroy(board.id)"
+              @click.stop="mainLayout.boardDestroyer.destroy(board.id)"
             />
           </q-item-section>
         </q-item>

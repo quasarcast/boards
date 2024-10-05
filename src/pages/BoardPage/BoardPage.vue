@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiDelete, mdiPlus } from '@quasar/extras/mdi-v7'
+import { mdiCard, mdiCardPlus, mdiDelete, mdiPlus, mdiShapeRectanglePlus, mdiTableColumnPlusBefore, mdiTableRowPlusAfter, mdiVectorRectangle } from '@quasar/extras/mdi-v7'
 import { VueDraggable } from 'vue-draggable-plus'
 import { useBoardPage } from './useBoardPage'
 
@@ -79,6 +79,8 @@ const {
                   autogrow
                 />
 
+                <q-space />
+
                 <q-btn
                   :icon="mdiDelete"
                   class="absolute-top-right"
@@ -114,7 +116,7 @@ const {
       <q-btn
         color="primary"
         fab
-        :icon="mdiPlus"
+        :icon="mdiShapeRectanglePlus"
         @click="cardGroupCreator.create()"
       />
     </q-page-sticky>
