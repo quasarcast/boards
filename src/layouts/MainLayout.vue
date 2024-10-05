@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiBook, mdiDelete, mdiDotsVertical, mdiPlus, mdiDeleteForever, mdiHome, mdiBookPlus, mdiSquare, mdiShapeSquarePlus } from '@quasar/extras/mdi-v7'
+import { mdiBook, mdiDelete, mdiDotsVertical, mdiPlus, mdiDeleteForever, mdiBookPlus, mdiShapeSquarePlus, mdiPencil } from '@quasar/extras/mdi-v7'
 import { useMainLayout } from './useMainLayout'
 
 const mainLayout = useMainLayout()
@@ -98,6 +98,7 @@ const mainLayout = useMainLayout()
         >
           {{ mainLayout.selectedProject?.name }} - Boards
           <q-space />
+
           <q-btn
             size="sm"
             flat
@@ -114,17 +115,49 @@ const mainLayout = useMainLayout()
         >
           <q-item-section>
             {{ board.title }}
-          </q-item-section>
 
-          <q-item-section side>
-            <q-btn
-              size="sm"
-              round
-              flat
-              color="blue-grey-3"
-              :icon="mdiDelete"
-              @click.stop="mainLayout.boardDestroyer.destroy(board.id)"
-            />
+            <q-menu
+              auto-close
+              context-menu
+            >
+              <q-list>
+                <q-item
+                  clickable
+                  @click="mainLayout.updateBoard(board.id)"
+                >
+                  <q-item-section
+                    avatar
+                    side
+                  >
+                    <q-icon
+                      color="blue-grey-3"
+                      :name="mdiPencil"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    Update
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  @click="mainLayout.boardDestroyer.destroy(board.id)"
+                >
+                  <q-item-section
+                    avatar
+                    side
+                  >
+                    <q-icon
+                      color="blue-grey-3"
+                      :name="mdiDelete"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    Delete
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
           </q-item-section>
         </q-item>
 

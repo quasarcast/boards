@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useCreator, useDestroyer, useIndexer } from '@vuemodel/core'
+import { useCreator, useDestroyer, useIndexer, useUpdater } from '@vuemodel/core'
 import { useLocalStorage } from '@vueuse/core'
 import { Dialog } from 'quasar'
 import { clearIndexedDb } from 'src/helpers/clearIndexedDb'
@@ -19,6 +19,7 @@ export const useMainLayout = defineStore('mainLayout', () => {
       boardsIndexer.index()
     }
   })
+  const boardUpdater = useUpdater(Board)
   const boardDestroyer = useDestroyer(Board, {
     onSuccess () {
       router.push({ name: 'home' })
@@ -36,6 +37,20 @@ export const useMainLayout = defineStore('mainLayout', () => {
     }).onOk(async (title) => {
       await boardCreator.create({ title })
       router.push({ name: 'board', params: { boardId: boardCreator.record.value?.id ?? '' } })
+    })
+  }
+
+  async function updateBoard (boardId: string) {
+    await boardUpdater.makeForm(boardId)
+    Dialog.create({
+      title: 'Update Board',
+      cancel: true,
+      prompt: {
+        model: boardUpdater.form.value.title ?? '',
+        filled: true
+      }
+    }).onOk(async (title) => {
+      await boardUpdater.update(boardId, { title })
     })
   }
 
@@ -91,6 +106,7 @@ export const useMainLayout = defineStore('mainLayout', () => {
     boardCreator,
     boardDestroyer,
     createBoard,
+    updateBoard,
     createProject,
     projectCreator,
     projectDestroyer,
