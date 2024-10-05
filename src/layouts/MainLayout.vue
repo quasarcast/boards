@@ -68,6 +68,7 @@ watch(projectId, async () => {
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
+          v-if="projectsIndexer.records.value?.length"
         />
 
         <q-toolbar-title>
@@ -75,6 +76,7 @@ watch(projectId, async () => {
         </q-toolbar-title>
 
         <q-select
+          v-if="projectsIndexer.records.value?.length"
           v-model="projectId"
           class="q-mr-sm"
           :options="projectsIndexer.records.value"
