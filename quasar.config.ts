@@ -14,7 +14,7 @@ export default configure((/* ctx */) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-
+      'vuemodel'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -63,14 +63,7 @@ export default configure((/* ctx */) => {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        ['vite-plugin-checker', {
-          vueTsc: {
-            tsconfigPath: 'tsconfig.vue-tsc.json'
-          },
-          eslint: {
-            lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"'
-          }
-        }, { server: false }]
+
       ]
     },
 
@@ -95,7 +88,10 @@ export default configure((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Dialog',
+        'Notify'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

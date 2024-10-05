@@ -1,6 +1,65 @@
+<script setup lang="ts">
+import { mdiDelete, mdiPlus } from '@quasar/extras/mdi-v7'
+import { useCreator, useDestroyer, useIndexer } from '@vuemodel/core'
+import { useLocalStorage } from '@vueuse/core'
+import { Dialog } from 'quasar'
+import Board from 'src/models/Board'
+import Project from 'src/models/Project'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const leftDrawerOpen = ref(false)
+
+const boardsIndexer = useIndexer(Board, { immediate: true })
+const boardCreator = useCreator(Board)
+const boardDestroyer = useDestroyer(Board)
+
+function createBoard () {
+  Dialog.create({
+    title: 'Create A Board',
+    cancel: true,
+    prompt: {
+      model: '',
+      filled: true
+    }
+  }).onOk(async (title) => {
+    await boardCreator.create({ title })
+    router.push({ name: 'board', params: { boardId: boardCreator.record.value?.id ?? '' } })
+  })
+}
+
+function createProject () {
+  Dialog.create({
+    title: 'Create A Project',
+    cancel: true,
+    prompt: {
+      model: '',
+      filled: true
+    }
+  }).onOk(async (name) => {
+    await projectCreator.create({ name })
+    projectId.value = projectCreator.record.value?.id ?? ''
+  })
+}
+
+const projectCreator = useCreator(Project)
+const projectsIndexer = useIndexer(Project, { immediate: true })
+
+const projectId = useLocalStorage('projectId', '')
+watch(projectId, async () => {
+  await router.push({ name: 'home' })
+  window.location.reload()
+})
+</script>
+
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header
+      class="bg-white text-blue-grey-9"
+      elevated
+    >
       <q-toolbar>
         <q-btn
           flat
@@ -8,14 +67,31 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
         <q-toolbar-title>
-          Quasar App
+          Boards
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-select
+          v-model="projectId"
+          class="q-mr-sm"
+          :options="projectsIndexer.records.value"
+          option-label="name"
+          option-value="id"
+          filled
+          dense
+          label="project"
+          map-options
+          emit-value
+        />
+
+        <q-btn
+          label="Create Project"
+          flat
+          @click="createProject()"
+        />
       </q-toolbar>
     </q-header>
 
@@ -27,15 +103,39 @@
       <q-list>
         <q-item-label
           header
+          class="row items-center"
         >
-          Essential Links
+          Boards
+          <q-space />
+          <q-btn
+            size="sm"
+            flat
+            round
+            :icon="mdiPlus"
+            @click="createBoard()"
+          />
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item
+          v-for="board in boardsIndexer.records.value"
+          :key="board.id"
+          :to="{ name: 'board', params: { boardId: board.id } }"
+        >
+          <q-item-section>
+            {{ board.title }}
+          </q-item-section>
+
+          <q-item-section side>
+            <q-btn
+              size="sm"
+              round
+              flat
+              color="blue-grey-3"
+              :icon="mdiDelete"
+              @click.stop="boardDestroyer.destroy(board.id)"
+            />
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -44,63 +144,3 @@
     </q-page-container>
   </q-layout>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
-
-defineOptions({
-  name: 'MainLayout'
-})
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
-</script>

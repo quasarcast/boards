@@ -1,7 +1,11 @@
 {
   "extends": "@quasar/app-vite/tsconfig-preset",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "types": [
+      "./node_modules/quasar/dist/types/index.d.ts"
+    ]
   },
   "exclude": [
     "./dist",
@@ -10,5 +14,5 @@
     "./src-capacitor",
     "./src-cordova",
     "./quasar.config.*.temporary.compiled*"
-  ]
+  ],
 }
