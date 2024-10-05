@@ -12,11 +12,11 @@ importers:
         specifier: ^1.16.4
         version: 1.16.12
       '@vuemodel/core':
-        specifier: 0.0.41
-        version: 0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
+        specifier: 0.0.42
+        version: 0.0.42(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
       '@vuemodel/pinia-local-storage':
         specifier: 0.0.26
-        version: 0.0.26(@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))
+        version: 0.0.26(@vuemodel/core@0.0.42(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.1.0(vue@3.5.10(typescript@5.5.4))
@@ -799,8 +799,8 @@ packages:
       pinia: ^2.x
       pinia-orm: ^1.x
 
-  '@vuemodel/core@0.0.41':
-    resolution: {integrity: sha512-ZENFaihTm47IkYH+RzN0u58XLR4k1MrTBlqG7btySxNNfOKmkD6ZoDb+p79NjqIfEMebISKzbfflb8Mjem0wUg==}
+  '@vuemodel/core@0.0.42':
+    resolution: {integrity: sha512-4GN6FdRiFIBv4Nxjyo2cfK7LEPZcJlUvM+HKLaLN0SB1IdINTD8z3KQMcV9Avx5R3xgT9cZGsaCmX6NIjiKhfA==}
     peerDependencies:
       pinia: ^2.x
       pinia-orm: 1.7.x
@@ -3662,7 +3662,7 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  '@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))':
+  '@vuemodel/core@0.0.42(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))':
     dependencies:
       '@vuemodel/core': 0.0.38(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)
       '@vueuse/core': 10.11.1(vue@3.5.10(typescript@5.5.4))
@@ -3684,9 +3684,9 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  '@vuemodel/pinia-local-storage@0.0.26(@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))':
+  '@vuemodel/pinia-local-storage@0.0.26(@vuemodel/core@0.0.42(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))':
     dependencies:
-      '@vuemodel/core': 0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
+      '@vuemodel/core': 0.0.42(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
       idb-keyval: 6.2.1
       just-clone: 6.2.0
       just-index: 4.2.0

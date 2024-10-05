@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
-    "@vuemodel/core": "0.0.41",
+    "@vuemodel/core": "0.0.42",
     "@vuemodel/pinia-local-storage": "0.0.26",
     "@vueuse/core": "^11.1.0",
     "pinia": "^2.2.2",
