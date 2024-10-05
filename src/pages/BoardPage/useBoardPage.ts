@@ -4,10 +4,12 @@ import Board from 'src/models/Board'
 import Card from 'src/models/Card'
 import CardGroup from 'src/models/CardGroup'
 import { computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { Notify } from 'quasar'
 
 export const useBoardPage = defineStore('boardPage', () => {
   const route = useRoute()
+  const router = useRouter()
   const boardId = computed(() => route.params.boardId)
 
   const boardUpdater = useUpdater(Board, {
@@ -24,7 +26,7 @@ export const useBoardPage = defineStore('boardPage', () => {
   const cardsBulkUpdater = useBulkUpdater(Card, {
     autoUpdate: true
   })
-  watch(() => boardId.value, async () => {
+  watch(boardId, async () => {
     boardUpdater.makeForm(boardId.value)
     await cardsBulkUpdater.index()
     cardsBulkUpdater.makeForms()
@@ -47,7 +49,6 @@ export const useBoardPage = defineStore('boardPage', () => {
   })
 
   const boardFinder = useFinder(Board, {
-    immediate: true,
     id: () => boardId.value,
     with: { card_groups: { } },
     onSuccess (response) {
@@ -62,8 +63,19 @@ export const useBoardPage = defineStore('boardPage', () => {
           }
         })
       }
+    },
+    onError (response) {
+      Notify.create({
+        message: response.standardErrors[0]?.message,
+        color: 'negative'
+      })
+      router.push({ name: 'home' })
     }
   })
+
+  if (boardId.value) {
+    boardFinder.find()
+  }
 
   const cardGroupDestroyer = useDestroyer(CardGroup, {
     onSuccess (response) {

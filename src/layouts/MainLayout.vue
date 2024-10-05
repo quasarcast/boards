@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiBook, mdiDelete, mdiDotsVertical, mdiPlus, mdiDeleteForever, mdiHome, mdiBookPlus } from '@quasar/extras/mdi-v7'
+import { mdiBook, mdiDelete, mdiDotsVertical, mdiPlus, mdiDeleteForever, mdiHome, mdiBookPlus, mdiSquare, mdiShapeSquarePlus } from '@quasar/extras/mdi-v7'
 import { useMainLayout } from './useMainLayout'
 
 const mainLayout = useMainLayout()
@@ -13,7 +13,7 @@ const mainLayout = useMainLayout()
     >
       <q-toolbar>
         <q-btn
-          v-if="mainLayout.projectsIndexer.records?.length"
+          v-if="mainLayout.selectedProject"
           flat
           dense
           round
@@ -29,7 +29,7 @@ const mainLayout = useMainLayout()
 
         <q-select
           v-if="mainLayout.projectsIndexer.records?.length"
-          v-model="mainLayout.projectId"
+          v-model="mainLayout.selectedProject"
           class="q-mr-sm"
           :options="mainLayout.projectsIndexer.records"
           option-label="name"
@@ -86,7 +86,7 @@ const mainLayout = useMainLayout()
     </q-header>
 
     <q-drawer
-      v-if="mainLayout.projectsIndexer.records?.length"
+      v-if="mainLayout.selectedProject"
       v-model="mainLayout.leftDrawerOpen"
       show-if-above
       bordered
@@ -96,7 +96,7 @@ const mainLayout = useMainLayout()
           header
           class="row items-center"
         >
-          Boards
+          {{ mainLayout.selectedProject?.name }} - Boards
           <q-space />
           <q-btn
             size="sm"
@@ -124,6 +124,18 @@ const mainLayout = useMainLayout()
               color="blue-grey-3"
               :icon="mdiDelete"
               @click.stop="mainLayout.boardDestroyer.destroy(board.id)"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section>
+            <q-btn
+              v-if="!mainLayout.boardsIndexer.records.length"
+              color="primary"
+              :icon="mdiShapeSquarePlus"
+              label="Add Board"
+              @click="mainLayout.createBoard()"
             />
           </q-item-section>
         </q-item>

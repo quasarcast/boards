@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { mdiBook, mdiBookPlus, mdiDelete } from '@quasar/extras/mdi-v7'
+import { mdiBookPlus, mdiDelete } from '@quasar/extras/mdi-v7'
 import { useMainLayout } from 'src/layouts/useMainLayout'
 
 const mainLayout = useMainLayout()
@@ -20,7 +20,7 @@ const mainLayout = useMainLayout()
       <div
         v-for="project in mainLayout.projectsIndexer.records"
         :key="project.id"
-        class="col-sm-12 col-md-4 col-lg-3"
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
       >
         <q-card
           class="cursor-pointer"
@@ -42,8 +42,8 @@ const mainLayout = useMainLayout()
               round
               :icon="mdiDelete"
               :color="mainLayout.projectId === project.id ? 'blue-grey-1' : 'blue-grey-4'"
-              :loading="mainLayout.boardDestroyer.destroying === project.id"
-              @click="mainLayout.boardDestroyer.destroy()"
+              :loading="mainLayout.projectDestroyer.destroying === project.id"
+              @click.stop="mainLayout.projectDestroyer.destroy(project.id)"
             />
           </q-card-section>
         </q-card>

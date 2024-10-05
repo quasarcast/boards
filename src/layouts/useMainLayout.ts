@@ -5,7 +5,7 @@ import { Dialog } from 'quasar'
 import { clearIndexedDb } from 'src/helpers/clearIndexedDb'
 import Board from 'src/models/Board'
 import Project from 'src/models/Project'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 export const useMainLayout = defineStore('mainLayout', () => {
@@ -14,8 +14,16 @@ export const useMainLayout = defineStore('mainLayout', () => {
   const leftDrawerOpen = ref(false)
 
   const boardsIndexer = useIndexer(Board, { immediate: true })
-  const boardCreator = useCreator(Board)
-  const boardDestroyer = useDestroyer(Board)
+  const boardCreator = useCreator(Board, {
+    onSuccess () {
+      boardsIndexer.index()
+    }
+  })
+  const boardDestroyer = useDestroyer(Board, {
+    onSuccess () {
+      router.push({ name: 'home' })
+    }
+  })
 
   function createBoard () {
     Dialog.create({
@@ -42,6 +50,8 @@ export const useMainLayout = defineStore('mainLayout', () => {
     }).onOk(async (name) => {
       await projectCreator.create({ name })
       projectId.value = projectCreator.record.value?.id ?? ''
+      projectsIndexer.index()
+      leftDrawerOpen.value = true
     })
   }
 
@@ -49,7 +59,15 @@ export const useMainLayout = defineStore('mainLayout', () => {
   const projectsIndexer = useIndexer(Project, {
     immediate: true
   })
-  const projectDestroyer = useDestroyer(Project)
+  const projectDestroyer = useDestroyer(Project, {
+    onSuccess: async () => {
+      await router.push({ name: 'home' })
+      projectId.value = ''
+    }
+  })
+  const selectedProject = computed(() => {
+    return projectsIndexer.repo.find(projectId.value)
+  })
 
   const projectId = useLocalStorage('projectId', '')
   watch(projectId, async () => {
@@ -78,6 +96,7 @@ export const useMainLayout = defineStore('mainLayout', () => {
     projectDestroyer,
     projectsIndexer,
     projectId,
+    selectedProject,
     clearDatabase
   }
 })
