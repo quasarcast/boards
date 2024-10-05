@@ -1,6 +1,6 @@
 import { Model } from 'pinia-orm'
 import { Attr, BelongsTo, HasManyBy, Str, Uid } from 'pinia-orm/decorators'
-import CardGroup from './CardGroup'
+import List from './List'
 import Project from './Project'
 
 export default class Board extends Model {
@@ -12,8 +12,8 @@ export default class Board extends Model {
   @Str('') declare title: string
   @Str('') declare description: string
   @Str('') declare project_id: string
-  @Attr(() => []) declare card_group_ids: string[]
+  @Attr(() => []) declare list_ids: string[]
 
   @BelongsTo(() => Project, 'project_id') declare project: Project | null
-  @HasManyBy(() => CardGroup, 'card_group_ids') declare card_groups: CardGroup[]
+  @HasManyBy(() => List, 'list_ids') declare lists: List[]
 }

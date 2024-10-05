@@ -29,7 +29,7 @@ const mainLayout = useMainLayout()
 
         <q-select
           v-if="mainLayout.projectsIndexer.records?.length"
-          v-model="mainLayout.selectedProject"
+          v-model="mainLayout.projectId"
           class="q-mr-sm"
           :options="mainLayout.projectsIndexer.records"
           option-label="name"
@@ -39,6 +39,7 @@ const mainLayout = useMainLayout()
           label="project"
           map-options
           emit-value
+          style="min-width: 100px"
         />
 
         <q-btn

@@ -3,8 +3,8 @@ import { Str, Uid, Attr, HasManyBy, BelongsTo } from 'pinia-orm/decorators'
 import Card from './Card'
 import Project from './Project'
 
-export default class CardGroup extends Model {
-  static override entity = 'card_groups'
+export default class List extends Model {
+  static override entity = 'lists'
   static override primaryKey = 'id'
 
   @Uid() declare id: string

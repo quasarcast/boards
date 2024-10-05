@@ -7,9 +7,9 @@ const {
   boardUpdater,
   cardCreator,
   cardsBulkUpdater,
-  cardGroupCreator,
-  cardGroupsBulkUpdater,
-  cardGroupDestroyer,
+  listCreator,
+  listsBulkUpdater,
+  listDestroyer,
   cardDestroyer
 } = useBoardPage()
 </script>
@@ -25,22 +25,22 @@ const {
     class="row justify-start overflow-auto full-width no-wrap"
   >
     <VueDraggable
-      v-if="boardUpdater.form?.card_group_ids"
-      v-model="boardUpdater.form.card_group_ids"
+      v-if="boardUpdater.form?.list_ids"
+      v-model="boardUpdater.form.list_ids"
       class="row no-wrap"
       direction="horizontal"
     >
       <div
-        v-for="cardGroupId in boardUpdater.form.card_group_ids"
-        :key="cardGroupId"
+        v-for="listId in boardUpdater.form.list_ids"
+        :key="listId"
         class="q-px-sm"
         style="width: 280px"
       >
         <q-card>
           <div class="row items-center bg-blue-grey-8">
             <q-input
-              v-if="cardGroupsBulkUpdater.forms[cardGroupId]"
-              v-model="cardGroupsBulkUpdater.forms[cardGroupId].title"
+              v-if="listsBulkUpdater.forms[listId]"
+              v-model="listsBulkUpdater.forms[listId].title"
               class="col q-pl-sm"
               dark
               dense
@@ -53,18 +53,18 @@ const {
               round
               size="sm"
               class="q-mx-xs"
-              @click="cardGroupDestroyer.destroy(cardGroupId)"
+              @click="listDestroyer.destroy(listId)"
             />
           </div>
 
           <VueDraggable
-            v-if="cardGroupsBulkUpdater.forms[cardGroupId]?.card_ids"
-            v-model="cardGroupsBulkUpdater.forms[cardGroupId].card_ids"
+            v-if="listsBulkUpdater.forms[listId]?.card_ids"
+            v-model="listsBulkUpdater.forms[listId].card_ids"
             class="full-width"
-            group="cardGroup"
+            group="list"
           >
             <div
-              v-for="cardId in cardGroupsBulkUpdater.forms[cardGroupId].card_ids"
+              v-for="cardId in listsBulkUpdater.forms[listId].card_ids"
               :key="cardId"
             >
               <q-card
@@ -102,7 +102,7 @@ const {
             flat
             @click="async () => {
               await cardCreator.create()
-              cardGroupsBulkUpdater.forms[cardGroupId].card_ids
+              listsBulkUpdater.forms[listId].card_ids
                 ?.push(cardCreator.record?.id ?? '')
             }"
           />
@@ -114,7 +114,8 @@ const {
       <q-btn
         color="primary"
         :icon="mdiShapeRectanglePlus"
-        @click="cardGroupCreator.create()"
+        label="Add List"
+        @click="listCreator.create()"
       />
     </div>
 
@@ -126,7 +127,7 @@ const {
         color="primary"
         fab
         :icon="mdiShapeRectanglePlus"
-        @click="cardGroupCreator.create()"
+        @click="listCreator.create()"
       />
     </q-page-sticky>
   </q-page>

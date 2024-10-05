@@ -1,6 +1,5 @@
 import { Model } from 'pinia-orm'
-import { BelongsTo, Str, Uid } from 'pinia-orm/decorators'
-import Project from './Project'
+import { Str, Uid } from 'pinia-orm/decorators'
 
 export default class ProjectUser extends Model {
   static override entity = 'project_users'

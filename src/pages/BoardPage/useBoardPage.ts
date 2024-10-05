@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useBulkUpdater, useCreator, useDestroyer, useFinder, useUpdater } from '@vuemodel/core'
 import Board from 'src/models/Board'
 import Card from 'src/models/Card'
-import CardGroup from 'src/models/CardGroup'
+import list from 'src/models/List'
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Notify } from 'quasar'
@@ -32,34 +32,34 @@ export const useBoardPage = defineStore('boardPage', () => {
     cardsBulkUpdater.makeForms()
   }, { immediate: true })
 
-  const cardGroupCreator = useCreator(CardGroup, {
+  const listCreator = useCreator(list, {
     onSuccess: async (response) => {
-      const cardGroupIds = [
-        ...(boardUpdater.form.value.card_group_ids ?? []),
+      const listIds = [
+        ...(boardUpdater.form.value.list_ids ?? []),
         response.record?.id ?? ''
       ]
-      boardUpdater.form.value.card_group_ids = cardGroupIds
+      boardUpdater.form.value.list_ids = listIds
 
-      cardGroupsBulkUpdater.currentPageIds.value.push(response.record?.id ?? '')
+      listsBulkUpdater.currentPageIds.value.push(response.record?.id ?? '')
     }
   })
-  const cardGroupsBulkUpdater = useBulkUpdater(CardGroup, {
+  const listsBulkUpdater = useBulkUpdater(list, {
     autoUpdate: true,
     immediatelyMakeForms: true
   })
 
   const boardFinder = useFinder(Board, {
     id: () => boardId.value,
-    with: { card_groups: { } },
+    with: { lists: { } },
     onSuccess (response) {
-      const cardGroupIds = response.record?.card_groups.map(group => group.id) ?? []
-      cardGroupsBulkUpdater.makeForms(cardGroupIds)
-      cardGroupsBulkUpdater.currentPageIds.value = cardGroupIds
+      const listIds = response.record?.lists.map(list => list.id) ?? []
+      listsBulkUpdater.makeForms(listIds)
+      listsBulkUpdater.currentPageIds.value = listIds
 
-      if (response.record?.card_group_ids.length !== response.record?.card_groups.length) {
-        boardUpdater.form.value.card_group_ids?.forEach((cardGroupId, index) => {
-          if (!cardGroupCreator.repo.find(cardGroupId)) {
-            boardUpdater.form.value.card_group_ids?.splice(index)
+      if (response.record?.list_ids.length !== response.record?.lists.length) {
+        boardUpdater.form.value.list_ids?.forEach((listId, index) => {
+          if (!listCreator.repo.find(listId)) {
+            boardUpdater.form.value.list_ids?.splice(index)
           }
         })
       }
@@ -77,13 +77,13 @@ export const useBoardPage = defineStore('boardPage', () => {
     boardFinder.find()
   }
 
-  const cardGroupDestroyer = useDestroyer(CardGroup, {
+  const listDestroyer = useDestroyer(list, {
     onSuccess (response) {
-      const removedIndex = boardUpdater.form.value.card_group_ids
+      const removedIndex = boardUpdater.form.value.list_ids
         ?.findIndex(id => id === response.record?.id) ?? -1
 
       if (removedIndex !== -1) {
-        boardUpdater.form.value.card_group_ids?.splice(removedIndex, 1)
+        boardUpdater.form.value.list_ids?.splice(removedIndex, 1)
       }
     }
   })
@@ -94,10 +94,10 @@ export const useBoardPage = defineStore('boardPage', () => {
     boardUpdater,
     cardCreator,
     cardsBulkUpdater,
-    cardGroupCreator,
-    cardGroupsBulkUpdater,
+    listCreator,
+    listsBulkUpdater,
     boardFinder,
-    cardGroupDestroyer,
+    listDestroyer,
     cardDestroyer
   }
 })
