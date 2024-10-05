@@ -12,11 +12,11 @@ importers:
         specifier: ^1.16.4
         version: 1.16.12
       '@vuemodel/core':
-        specifier: file:../vuemodel/packages/core
-        version: file:../vuemodel/packages/core(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
+        specifier: 0.0.41
+        version: 0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
       '@vuemodel/pinia-local-storage':
-        specifier: file:../vuemodel/packages/pinia-local-storage
-        version: file:../vuemodel/packages/pinia-local-storage(@vuemodel/core@file:../vuemodel/packages/core(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))
+        specifier: 0.0.26
+        version: 0.0.26(@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.1.0(vue@3.5.10(typescript@5.5.4))
@@ -24,7 +24,7 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
       pinia-orm:
-        specifier: ^1.9.2
+        specifier: ^1.7.x
         version: 1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))
       quasar:
         specifier: ^2.16.0
@@ -799,15 +799,15 @@ packages:
       pinia: ^2.x
       pinia-orm: ^1.x
 
-  '@vuemodel/core@file:../vuemodel/packages/core':
-    resolution: {directory: ../vuemodel/packages/core, type: directory}
+  '@vuemodel/core@0.0.41':
+    resolution: {integrity: sha512-ZENFaihTm47IkYH+RzN0u58XLR4k1MrTBlqG7btySxNNfOKmkD6ZoDb+p79NjqIfEMebISKzbfflb8Mjem0wUg==}
     peerDependencies:
       pinia: ^2.x
       pinia-orm: 1.7.x
       vue: ^3.x
 
-  '@vuemodel/pinia-local-storage@file:../vuemodel/packages/pinia-local-storage':
-    resolution: {directory: ../vuemodel/packages/pinia-local-storage, type: directory}
+  '@vuemodel/pinia-local-storage@0.0.26':
+    resolution: {integrity: sha512-SuD8O991f0izMlVEMam/Jy/WfZbWwsaiPX4kccfSJxu+jas2MGy3qnr0lYtzPlZgy+BPPhV56ycI6aCvx28CHg==}
     peerDependencies:
       '@vuemodel/core': ^0.0.x
       pinia: ^2.x
@@ -3662,7 +3662,7 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  '@vuemodel/core@file:../vuemodel/packages/core(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))':
+  '@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))':
     dependencies:
       '@vuemodel/core': 0.0.38(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)
       '@vueuse/core': 10.11.1(vue@3.5.10(typescript@5.5.4))
@@ -3684,9 +3684,9 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  '@vuemodel/pinia-local-storage@file:../vuemodel/packages/pinia-local-storage(@vuemodel/core@file:../vuemodel/packages/core(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))':
+  '@vuemodel/pinia-local-storage@0.0.26(@vuemodel/core@0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(vue@3.5.10(typescript@5.5.4))':
     dependencies:
-      '@vuemodel/core': file:../vuemodel/packages/core(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
+      '@vuemodel/core': 0.0.41(pinia-orm@1.9.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))))(pinia@2.2.2(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4)))(typescript@5.5.4)(vue@3.5.10(typescript@5.5.4))
       idb-keyval: 6.2.1
       just-clone: 6.2.0
       just-index: 4.2.0
