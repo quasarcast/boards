@@ -29,6 +29,7 @@ const {
       v-model="boardUpdater.form.list_ids"
       class="row no-wrap"
       direction="horizontal"
+      handle=".list-drag-handle"
     >
       <div
         v-for="listId in boardUpdater.form.list_ids"
@@ -37,7 +38,7 @@ const {
         style="width: 280px"
       >
         <q-card>
-          <div class="row items-center bg-blue-grey-8">
+          <div class="row items-center bg-blue-grey-8 list-drag-handle">
             <q-input
               v-if="listsBulkUpdater.forms[listId]"
               v-model="listsBulkUpdater.forms[listId].title"
@@ -115,6 +116,7 @@ const {
         color="primary"
         :icon="mdiShapeRectanglePlus"
         label="Add List"
+        style="min-width: 130px"
         @click="listCreator.create()"
       />
     </div>
